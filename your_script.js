@@ -1,11 +1,4 @@
-const data = [
-  { ID: 1, Name: "John", Team: "Team A" },
-  { ID: 2, Name: "Jane", Team: "Team B" },
-  { ID: 3, Name: "Mike", Team: "Team A" },
-  { ID: 4, Name: "Anna", Team: "Team C" },
-  { ID: 5, Name: "John", Team: "Team B" },
-  { ID: 6, Name: "Johns", Team: "Team C" }
-];
+d3.csv("https://flunky.github.io/cars2017.csv").then(function(data) {
 
 // Count the occurrences of each name in each team
 const teamNameCounts = {};
@@ -55,3 +48,4 @@ svg.append("g")
 // Add y-axis
 svg.append("g")
   .call(d3.axisLeft(yScale));
+}
