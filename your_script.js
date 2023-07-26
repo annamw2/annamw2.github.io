@@ -1,16 +1,24 @@
 const data = [
-  { country: "Country 1", value: 100 },
-  { country: "Country 2", value: 150 },
-  { country: "Country 3", value: 200 },
+  { ID: 1, Name: "John", Team: "Team A" },
+  { ID: 2, Name: "Jane", Team: "Team B" },
+  { ID: 3, Name: "Mike", Team: "Team A" },
+  { ID: 4, Name: "Anna", Team: "Team C" },
+  { ID: 5, Name: "John", Team: "Team B" },
+  { ID: 6, Name: "Jane", Team: "Team C" },
   // Add more data points here as needed
 ];
+
+// Count the occurrences of each name in each team
+const teamNameCounts = {};
+
+data.forEach(entry => {
+  const team = entry.Team;
+  teamNameCounts[team] = (teamNameCounts[team] || 0) + 1;
+});
 
 // Set the dimensions of the canvas
 const width = 600;
 const height = 400;
-const margin = { top: 20, right: 20, bottom: 50, left: 50 };
-const graphWidth = width - margin.left - margin.right;
-const graphHeight = height - margin.top - margin.bottom;
 
 // Create the SVG canvas
 const svg = d3.select("#barGraph")
@@ -18,24 +26,33 @@ const svg = d3.select("#barGraph")
   .attr("width", width)
   .attr("height", height);
 
-// Create a scale for the x-axis
+// Create a scale for the x-axis (teams)
 const xScale = d3.scaleBand()
-  .domain(data.map(d => d.country))
-  .range([margin.left, width - margin.right])
-  .paddingInner(0.1);
+  .domain(Object.keys(teamNameCounts))
+  .range([0, width])
+  .padding(0.1);
 
-// Create a scale for the y-axis
+// Create a scale for the y-axis (count of names)
 const yScale = d3.scaleLinear()
-  .domain([0, d3.max(data, d => d.value)])
-  .range([height - margin.bottom, margin.top]);
+  .domain([0, d3.max(Object.values(teamNameCounts))])
+  .range([height, 0]);
 
 // Create the bars
 svg.selectAll("rect")
-  .data(data)
+  .data(Object.entries(teamNameCounts))
   .enter()
   .append("rect")
-  .attr("x", d => xScale(d.country))
-  .attr("y", d => yScale(d.value))
+  .attr("x", d => xScale(d[0]))
+  .attr("y", d => yScale(d[1]))
   .attr("width", xScale.bandwidth())
-  .attr("height", d => height - margin.bottom - yScale(d.value))
+  .attr("height", d => height - yScale(d[1]))
   .attr("fill", "steelblue");
+
+// Add x-axis
+svg.append("g")
+  .attr("transform", `translate(0, ${height})`)
+  .call(d3.axisBottom(xScale));
+
+// Add y-axis
+svg.append("g")
+  .call(d3.axisLeft(yScale));
