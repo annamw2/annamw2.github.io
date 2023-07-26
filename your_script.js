@@ -3,7 +3,8 @@ const data = [
   { ID: 2, Name: "Jane", Team: "Team B" },
   { ID: 3, Name: "Mike", Team: "Team A" },
   { ID: 4, Name: "Anna", Team: "Team C" },
-  { ID: 5, Name: "John", Team: "Team B" }
+  { ID: 5, Name: "John", Team: "Team B" },
+  { ID: 6, Name: "John", Team: "Team D" }
 ];
 
 // Count the occurrences of each name in each team
