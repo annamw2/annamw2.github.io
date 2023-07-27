@@ -9,7 +9,7 @@ const svg = d3.select("#barChart")
   .attr("height", height);
 
 // Fetch data from the URL
-const dataURL = "https://flunky.github.io/cars2017.csv"; // Replace with the actual URL
+const dataURL = "https://github.com/annamw2/ProjectData/blob/3c964f46f1f0ce80a813135e714460b2e1785429/Athlete.xlsx"; // Replace with the actual URL
 d3.json(dataURL)
   .then(data => {
     // Assuming the fetched data is an array of objects with 'label' and 'value' properties
