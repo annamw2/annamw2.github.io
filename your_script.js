@@ -15,20 +15,20 @@
 const data_raw = d3.csv(
   "https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete"
 )
-barcode = {
-  const svg = d3
-    .create("svg")
-    .attr("viewBox", [0, 0, width, 200])
-    .style("overflow", "visible");
 
-  svg
-    .selectAll("rect")
-    .data(data_raw)
-    .join("rect")
-    .attr("x", (d) => d.Age)
-    .attr("y", 0)
-    .attr("width", 0.3)
-    .attr("height", 200);
+const width = 400;
+const height = 300;
 
-  return svg.node();
-}
+// Create the SVG canvas
+const svg = d3.select("#graph")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height);
+
+// Create a circle in the center of the canvas
+const circleRadius = 50;
+const circle = svg.append("circle")
+  .attr("cx", width / 2)
+  .attr("cy", height / 2)
+  .attr("r", circleRadius)
+  .attr("fill", "steelblue");
