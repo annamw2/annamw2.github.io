@@ -31,9 +31,9 @@ d3.json(dataURL)
       .data(data)
       .enter()
       .append("circle")
-      .attr("cx", d => xScale(d.Age))
-      .attr("cy", d => yScale(d.Height))
-      .attr("r", 5)
+      .attr("cx", d => xScale(+d["Age"]))
+      .attr("cy", d => yScale(+d["Height"]))
+      .attr("r", 5 ) 
       .attr("fill", "steelblue");
     
     // Add x-axis
