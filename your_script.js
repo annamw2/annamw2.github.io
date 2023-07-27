@@ -1,51 +1,42 @@
-d3.csv("https://flunky.github.io/cars2017.csv").then(function(data) {
 
-// Count the occurrences of each name in each team
-const teamNameCounts = {};
-
-data.forEach(entry => {
-  const team = entry.Team;
-  teamNameCounts[team] = (teamNameCounts[team] || 0) + 1;
-});
-
-// Set the dimensions of the canvas
 const width = 600;
 const height = 400;
 
 // Create the SVG canvas
-const svg = d3.select("#barGraph")
+const svg = d3.select("#barChart")
   .append("svg")
   .attr("width", width)
   .attr("height", height);
 
-// Create a scale for the x-axis (teams)
-const xScale = d3.scaleBand()
-  .domain(Object.keys(teamNameCounts))
-  .range([0, width])
-  .padding(0.1);
+// Fetch data from the URL
+const dataURL = "https://flunky.github.io/cars2017.csv"; // Replace with the actual URL
+d3.json(dataURL)
+  .then(data => {
+    // Assuming the fetched data is an array of objects with 'label' and 'value' properties
 
-// Create a scale for the y-axis (count of names)
-const yScale = d3.scaleLinear()
-  .domain([0, d3.max(Object.values(teamNameCounts))])
-  .range([height, 0]);
+    // Create a scale for the x-axis
+    const xScale = d3.scaleBand()
+      .domain(data.map(d => d.label))
+      .range([0, width])
+      .padding(0.1);
 
-// Create the bars
-svg.selectAll("rect")
-  .data(Object.entries(teamNameCounts))
-  .enter()
-  .append("rect")
-  .attr("x", d => xScale(d[0]))
-  .attr("y", d => yScale(d[1]))
-  .attr("width", xScale.bandwidth())
-  .attr("height", d => height - yScale(d[1]))
-  .attr("fill", "steelblue");
+    // Create a scale for the y-axis
+    const yScale = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.value)])
+      .range([height, 0]);
 
-// Add x-axis
-svg.append("g")
-  .attr("transform", `translate(0, ${height})`)
-  .call(d3.axisBottom(xScale));
+    // Create the bars
+    svg.selectAll("rect")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("x", d => xScale(d.label))
+      .attr("y", d => yScale(d.value))
+      .attr("width", xScale.bandwidth())
+      .attr("height", d => height - yScale(d.value))
+      .attr("fill", "steelblue");
+  })
+  .catch(error => {
+    console.error("Error fetching data:", error);
+  });
 
-// Add y-axis
-svg.append("g")
-  .call(d3.axisLeft(yScale));
-}
