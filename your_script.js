@@ -1,40 +1,50 @@
-
 const width = 600;
 const height = 400;
-
+const margin = { top: 20, right: 20, bottom: 50, left: 50 };
+const graphWidth = width - margin.left - margin.right;
+const graphHeight = height - margin.top - margin.bottom;
+// https://github.com/annamw2/ProjectData/blob/3c964f46f1f0ce80a813135e714460b2e1785429/Athlete.xlsx
 // Create the SVG canvas
-const svg = d3.select("#barChart")
+const svg = d3.select("#scatterPlot")
   .append("svg")
   .attr("width", width)
   .attr("height", height);
 
-// Fetch data from the URL
-const dataURL = "https://github.com/annamw2/ProjectData/blob/3c964f46f1f0ce80a813135e714460b2e1785429/Athlete.xlsx"; // Replace with the actual URL
+// Fetch data from the URL source
+const dataURL = "https://github.com/annamw2/ProjectData/blob/3c964f46f1f0ce80a813135e714460b2e1785429/Athlete.xlsx"; // Replace with the actual URL source
 d3.json(dataURL)
   .then(data => {
-    // Assuming the fetched data is an array of objects with 'label' and 'value' properties
+    // Assuming the fetched data is an array of objects with 'Age' and 'Height' properties
 
-    // Create a scale for the x-axis
-    const xScale = d3.scaleBand()
-      .domain(data.map(d => d.Age))
-      .range([0, width])
-      .padding(0.1);
+    // Create a scale for the x-axis (Age)
+    const xScale = d3.scaleLinear()
+      .domain(d3.extent(data, d => d.Age)) // Auto-scale to the min and max Age values
+      .range([margin.left, width - margin.right]);
 
-    // Create a scale for the y-axis
+    // Create a scale for the y-axis (Height)
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.Height)])
-      .range([height, 0]);
+      .domain(d3.extent(data, d => d.Height)) // Auto-scale to the min and max Height values
+      .range([height - margin.bottom, margin.top]);
 
-    // Create the bars
-    svg.selectAll("rect")
+    // Create the scatter plot points
+    svg.selectAll("circle")
       .data(data)
       .enter()
-      .append("rect")
-      .attr("x", d => xScale(d.Age))
-      .attr("y", d => yScale(d.Height))
-      .attr("width", xScale.bandwidth())
-      .attr("height", d => height - yScale(d.value))
+      .append("circle")
+      .attr("cx", d => xScale(d.Age))
+      .attr("cy", d => yScale(d.Height))
+      .attr("r", 5)
       .attr("fill", "steelblue");
+    
+    // Add x-axis
+    svg.append("g")
+      .attr("transform", `translate(0, ${height - margin.bottom})`)
+      .call(d3.axisBottom(xScale));
+
+    // Add y-axis
+    svg.append("g")
+      .attr("transform", `translate(${margin.left}, 0)`)
+      .call(d3.axisLeft(yScale));
   })
   .catch(error => {
     console.error("Error fetching data:", error);
