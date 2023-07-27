@@ -16,13 +16,13 @@ d3.json(dataURL)
 
     // Create a scale for the x-axis
     const xScale = d3.scaleBand()
-      .domain(data.map(d => d.label))
+      .domain(data.map(d => d.Age))
       .range([0, width])
       .padding(0.1);
 
     // Create a scale for the y-axis
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.value)])
+      .domain([0, d3.max(data, d => d.Height)])
       .range([height, 0]);
 
     // Create the bars
@@ -30,8 +30,8 @@ d3.json(dataURL)
       .data(data)
       .enter()
       .append("rect")
-      .attr("x", d => xScale(d.label))
-      .attr("y", d => yScale(d.value))
+      .attr("x", d => xScale(d.Age))
+      .attr("y", d => yScale(d.Height))
       .attr("width", xScale.bandwidth())
       .attr("height", d => height - yScale(d.value))
       .attr("fill", "steelblue");
