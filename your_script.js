@@ -11,7 +11,7 @@ const svg = d3.select("#scatterPlot")
   .attr("height", height);
 
 // Fetch data from the URL source
-const dataURL = "https://github.com/annamw2/ProjectData/blob/3c964f46f1f0ce80a813135e714460b2e1785429/Athlete.csv"; // Replace with the actual URL source
+const dataURL = "https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete"; // Replace with the actual URL source
 d3.json(dataURL)
   .then(data => {
     // Assuming the fetched data is an array of objects with 'Age' and 'Height' properties
