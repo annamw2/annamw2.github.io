@@ -10,7 +10,7 @@
  // .attr("width", width)
  // .attr("height", height);
 
-// Fetch data from the URL source
+// Fetch data from the URL source 
 //const dataURL = "https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete"; // Replace with the actual URL source
 const data_raw = d3.csv(
   "https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete"
