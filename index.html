@@ -7,13 +7,14 @@
  
 <script>
 // D3 Code 
+// https://gist.githubusercontent.com/annamw2/ff59d71536323930b3d5e8cd2e00df2a/raw/371cca0c92335a4146c4510c649e7e7496516235/AthleteCount
 var margin = {top: 20, right: 20, bottom: 60, left: 80},
      width = 500 - margin.left - margin.right,
      height = 500 - margin.top - margin.bottom;
-d3.csv("https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete", function(error, data) {
+d3.csv("https://gist.githubusercontent.com/annamw2/ff59d71536323930b3d5e8cd2e00df2a/raw/371cca0c92335a4146c4510c649e7e7496516235/AthleteCount", function(error, data) {
             if (error) {
                throw error;
-            }
+            }    
 colors=["#00A5E3","#FF96C5","#00CDAC","#FFA23A","#74737A"]  
 var svg = d3.select("body") //create Svg element
    .append("svg")
@@ -26,9 +27,9 @@ var chart=svg.append('g')
    .attr('width', width)
    .attr('height', height)
 var pie=d3.pie() 
-        .value(d => d.Age)
+        .value(d => d.value)
 var color_scale=d3.scaleOrdinal()
-              .domain(data.map(d=>d.Season))
+              .domain(data.map(d=>d.language))
               .range(colors)
 let arc=d3.arc()
        .outerRadius(150)
@@ -41,12 +42,12 @@ var p_chart=chart.selectAll("pie")
 p_chart.append("path")
      .attr("d",arc) 
      .attr("fill",d=>{
-       return color_scale(d.data.Season);
+       return color_scale(d.data.language);
      })     
 p_chart.append("text")
-      .text(function(d){ return d.data.Season})
+      .text(function(d){ return d.data.language})
       .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")";  }) 
-      .style("text-anchor", "middle")           
+      .style("text-anchor", "middle")                   
 </script>
 </body>
 </html>
