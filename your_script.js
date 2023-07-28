@@ -14,9 +14,9 @@
 //const dataURL = "https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete"; // Replace with the actual URL source
 //const data_raw =
 //d3.csv(dataURL)
-d3.csv("https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete").then(data => {
-  // Assuming the fetched data contains a "Height" field
-
+data = d3.csv(
+  "https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete"
+)
   // Create a scale for the x-axis (using index for simplicity)
   const xScale = d3.scaleBand()
     .domain(data.map((d, i) => i))
@@ -38,4 +38,3 @@ d3.csv("https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846
     .attr("width",1)
     .attr("height", 2)
     .attr("fill", "steelblue");
-})
