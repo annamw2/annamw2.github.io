@@ -26,11 +26,17 @@
       margin: 5px;
       padding: 10px 20px;
       font-size: 18px;
+      background-color: #f0f0f0;
+      color: #333;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .button:hover {
       background-color: #007bff;
       color: #fff;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
+      border-color: #007bff;
     }
     .chart-container {
       width: 1px;
@@ -44,7 +50,7 @@
 <div class="button-container">
     <button onclick="goToPage('index2.html')">Overview</button>
     <button onclick="goToPage('page2.html')">The USA</button>
-    <button onclick="goToPage('page3.html')">Events/button>
+    <button onclick="goToPage('page3.html')">Events</button>
   </div>
 <h2>Top 15 Countries in Number of Athletes Sent to Olympics</h2>
   <script>
