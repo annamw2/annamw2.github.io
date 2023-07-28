@@ -45,7 +45,7 @@
             }
                
             x.domain(data.map(function(d) { return d.Year; }));
-            y.domain([0, d3.max(data, function(d) { return d.Height; })]);
+            y.domain([0, d3.max(data, function(d) { return d.Age; })]);
                      
             g.append("g")
                .attr("transform", "translate(0," + height + ")")
@@ -79,8 +79,8 @@
                .on("mouseover", onMouseOver) 
                .on("mouseout", onMouseOut)   
                .attr("x", function(d) { return x(d.Year); })
-               .attr("y", function(d) { return y(d.Height); })
-               .attr("width", x.bandwidth()).transition()
+               .attr("y", function(d) { return y(d.Age); })
+               .attr("width", 3).transition()
                .ease(d3.easeLinear).duration(200)
                .delay(function (d, i) {
                   return i * 25;
