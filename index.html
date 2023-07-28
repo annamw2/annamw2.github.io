@@ -56,7 +56,7 @@
 <script>
 // D3 Code 
 // https://gist.githubusercontent.com/annamw2/ff59d71536323930b3d5e8cd2e00df2a/raw/371cca0c92335a4146c4510c649e7e7496516235/AthleteCount
-var margin = {top: 0, right: 20, bottom: 20, left: 20},
+var margin = {top: 0, right: 1, bottom: 1, left: 1},
      width = 500 - margin.left - margin.right,
      height = 500 - margin.top - margin.bottom;
 //d3.csv("https://gist.githubusercontent.com/annamw2/ff59d71536323930b3d5e8cd2e00df2a/raw/371cca0c92335a4146c4510c649e7e7496516235/Athlete", function(error, data) {
@@ -86,7 +86,7 @@ var svg = d3.select("body") //create Svg element
    //.style("border", "solid 1px grey")
   //  .attr("transform","translate(200,0)");                 
 var chart=svg.append('g')
-   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+  // .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
    .attr('width', width)
    .attr('height', height)
 var pie=d3.pie() 
