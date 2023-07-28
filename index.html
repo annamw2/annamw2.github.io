@@ -34,19 +34,13 @@
             x.domain(data.map(function(d) { return d.Year; }));
             y.domain([0, d3.max(data, function(d) { return d.Age; })]);
                      
-         
-             
             svg.selectAll(".bar")
-               .data(data)
                .enter()
                .append("rect")
                .attr("class", "bar") 
                .attr("x", 2)
                .attr("y", 1)
-    
-          
-          
-        
+  
       </script>
    </body>
 </html>
