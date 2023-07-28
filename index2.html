@@ -102,7 +102,15 @@
       .attr("stroke", "steelblue")
       .attr("stroke-width", 2)
       .attr("d", line);
-
+    // Add x-axis
+    svg.append("g")
+      .attr("transform", `translate(0, ${height - margin.bottom})`)
+      .call(d3.axisBottom(xScale));
+    
+    // Add y-axis
+    svg.append("g")
+      .attr("transform", `translate(${margin.left}, 0)`)
+      .call(d3.axisLeft(yScale));
         </script> 
     </div>
     <div class="graph" id="graph2">
