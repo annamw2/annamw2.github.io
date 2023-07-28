@@ -1,45 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Simple D3 Bar Graph</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
 <body>
-  <div id="barGraph"></div>
+ 
+<script>
+// D3 Code 
+var margin = {top: 20, right: 20, bottom: 60, left: 80},
+     width = 500 - margin.left - margin.right,
+     height = 500 - margin.top - margin.bottom;
+var data = [
+  {language:  "Python", value: 30},
+  {language:  "Java", value: 20},
+  {language:  "C/C++", value: 15},
+  {language:  "Javascript", value: 35},
+  {language:  "PHP", value: 15},];
+colors=["#00A5E3","#FF96C5","#00CDAC","#FFA23A","#74737A"]  
+var svg = d3.select("body") //create Svg element
+   .append("svg")
+   .attr('width', width + margin.right + margin.left)
+   .attr('height', height + margin.top + margin.bottom)
+   .style("border", "solid 1px red")
+    .attr("transform","translate(200,0)");                 
+var chart=svg.append('g')
+   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+   .attr('width', width)
+   .attr('height', height)
+var pie=d3.pie() 
+        .value(d => d.value)
+var color_scale=d3.scaleOrdinal()
+              .domain(data.map(d=>d.language))
+              .range(colors)
+let arc=d3.arc()
+       .outerRadius(150)
+       .innerRadius(0)
+var p_chart=chart.selectAll("pie")
+     .data(pie(data))
+     .enter()
+     .append("g")
+     .attr('transform', 'translate(170,230)') 
+p_chart.append("path")
+     .attr("d",arc) 
+     .attr("fill",d=>{
+       return color_scale(d.data.language);
+     })     
+p_chart.append("text")
+      .text(function(d){ return d.data.language})
+      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")";  }) 
+      .style("text-anchor", "middle")           
+</script>
 </body>
 </html>
 
-   <body>
-      <svg width = "500" height = "500"></svg>
-      <script>
-  
 
-         d3.csv("https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete", function(error, data) {
-            if (error) {
-               throw error;
-            }
-               
-            const data_raw  = d3.csv(
-              "https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete"
-            )
-      
-              const svg =d3.select("#barGraph")
-           .append("svg")
-           .attr("width", width)
-           .attr("height", height);
-            
-              svg
-                .selectAll("rect")
-                .data(data_raw)
-                .join("rect")
-                .attr("x", (d) => d.Age)
-                .attr("y", 0)
-                .attr("width", 0.3)
-                .attr("height", 200);
-            
-              return svg.node();
-            }
-  
-      </script>
-   </body>
-</html>
+<!--// d3.csv("https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete", function(error, data) {
+-->
+        
