@@ -42,18 +42,17 @@
 <body>
 <h1>Analysis of Olympics Since 1896</h1>
 <h2>Top 15 Countries in Number of Athletes Sent to Olympics</h2>
-    <div class="button-container">
-<button onclick="goToPage('index2.html')">Page 1</button>
-<button onclick="goToPage('page2.html')">Page 2</button>
-<button onclick="goToPage('page3.html')">Page 3</button>
+<div class="button-container">
+    <button onclick="goToPage('index2.html')">Page 1</button>
+    <button onclick="goToPage('page2.html')">Page 2</button>
+    <button onclick="goToPage('page3.html')">Page 3</button>
+  </div>
   <script>
     function goToPage(url) {
       window.location.href = url;
     }
-    </div>
-  
-  <div class="chart-container">
   </script>
+ <div class="chart-container">
 <script>
 // D3 Code 
 // https://gist.githubusercontent.com/annamw2/ff59d71536323930b3d5e8cd2e00df2a/raw/371cca0c92335a4146c4510c649e7e7496516235/AthleteCount
@@ -114,6 +113,7 @@ p_chart.append("text")
       .style("text-anchor", "middle")        
 //});
 </script>
+    </div>
 </body>
 </html>
 
