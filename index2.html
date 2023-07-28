@@ -63,77 +63,57 @@
  <div class="graph-container">
     <div class="graph" id="graph1">
      <script>
-         const data = [{x:  1896, y :380},
-{x:  1900, y :1936},
-{x:  1904, y :1301},
-{x:  1906, y :1733},
-{x:  1908, y :3101},
-{x:  1912, y :4040},
-{x:  1920, y :4292},
-{x:  1924, y :5233},
-{x:  1928, y :4992},
-{x:  1932, y :2969},
-{x:  1936, y :6506},
-{x:  1948, y :6405},
-{x:  1952, y :8270},
-{x:  1956, y :5127},
-{x:  1960, y :8119},
-{x:  1964, y :7702},
-{x:  1968, y :8588},
-{x:  1972, y :10304},
-{x:  1976, y :8641},
-{x:  1980, y :7191},
-{x:  1984, y :9454},
-{x:  1988, y :12037},
-{x:  1992, y :12977},
-{x:  1996, y :13780},
-{x:  2000, y :13821},
-{x:  2004, y :13443},
-{x:  2008, y :13602},
-{x:  2012, y :12920},
-{x:  2016, y :13688},
+    
+    const data = [
+  { year: 2000, percentage: 25 },
+  { year: 2005, percentage: 40 },
+  { year: 2010, percentage: 35 },
+  { year: 2015, percentage: 50 },
+  { year: 2020, percentage: 45 }
 ];
-    // Set the dimensions of the canvas
-    const width = 400;
-    const height = 300;
-    const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-    
-    // Create the SVG canvas
-    const svg = d3.select("body")
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height);
-    
-    // Create scales for the x and y axes
-    const xScale = d3.scaleLinear()
-      .domain(d3.extent(data, d => d.x))
-      .range([margin.left, width - margin.right]);
-    
-    const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.y)])
-      .range([height - margin.bottom, margin.top]);
-    
-    // Create the line generator
-    const line = d3.line()
-      .x(d => xScale(d.x))
-      .y(d => yScale(d.y));
-    
-    // Create the line path
-    svg.append("path")
-      .datum(data)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 2)
-      .attr("d", line);
-    // Add x-axis
-    svg.append("g")
-      .attr("transform", `translate(0, ${height - margin.bottom})`)
-      .call(d3.axisBottom(xScale));
-    
-    // Add y-axis
-    svg.append("g")
-      .attr("transform", `translate(${margin.left}, 0)`)
-      .call(d3.axisLeft(yScale));
+
+// Set the dimensions of the canvas
+const width = 400;
+const height = 300;
+const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+
+// Create the SVG canvas
+const svg = d3.select("body")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height);
+
+// Create scales for the x and y axes
+const xScale = d3.scaleLinear()
+  .domain(d3.extent(data, d => d.year))
+  .range([margin.left, width - margin.right]);
+
+const yScale = d3.scaleLinear()
+  .domain([0, d3.max(data, d => d.percentage)])
+  .range([height - margin.bottom, margin.top]);
+
+// Create the line generator
+const line = d3.line()
+  .x(d => xScale(d.year))
+  .y(d => yScale(d.percentage));
+
+// Create the line path
+svg.append("path")
+  .datum(data)
+  .attr("fill", "none")
+  .attr("stroke", "steelblue")
+  .attr("stroke-width", 2)
+  .attr("d", line);
+
+// Add x-axis
+svg.append("g")
+  .attr("transform", `translate(0, ${height - margin.bottom})`)
+  .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
+
+// Add y-axis
+svg.append("g")
+  .attr("transform", `translate(${margin.left}, 0)`)
+  .call(d3.axisLeft(yScale).tickFormat(d3.format(".0%")));
         </script> 
     </div>
     <div class="graph" id="graph2">
