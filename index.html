@@ -82,9 +82,9 @@ colors=["#00A5E3","#FF96C5","#00CDAC","#FFA23A","#74737A","#74737A","#74737A","#
 var svg = d3.select("body") //create Svg element
    .append("svg")
    .attr('width', width + margin.right + margin.left)
-   .attr('height', height + margin.top + margin.bottom)
-   .style("border", "solid 1px grey")
-    .attr("transform","translate(200,0)");                 
+   .attr('height', height + margin.top + margin.bottom);
+   //.style("border", "solid 1px grey")
+  //  .attr("transform","translate(200,0)");                 
 var chart=svg.append('g')
    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
    .attr('width', width)
