@@ -35,7 +35,7 @@ var svg = d3.select("body") //create Svg element
    .append("svg")
    .attr('width', width + margin.right + margin.left)
    .attr('height', height + margin.top + margin.bottom)
-   .style("border", "solid 1px red")
+   .style("border", "solid 1px grey")
     .attr("transform","translate(200,0)");                 
 var chart=svg.append('g')
    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
@@ -66,6 +66,66 @@ p_chart.append("text")
 //});
 </script>
 </body>
+    <script>
+// D3 Code 
+// https://gist.githubusercontent.com/annamw2/ff59d71536323930b3d5e8cd2e00df2a/raw/371cca0c92335a4146c4510c649e7e7496516235/AthleteCount
+var margin = {top: 20, right: 20, bottom: 60, left: 80},
+     width = 500 - margin.left - margin.right,
+     height = 500 - margin.top - margin.bottom;
+//d3.csv("https://gist.githubusercontent.com/annamw2/ff59d71536323930b3d5e8cd2e00df2a/raw/371cca0c92335a4146c4510c649e7e7496516235/Athlete", function(error, data) {
+//            if (error) {
+//               throw error;
+//            }    
+data = [{language:  'United States', value :4782},
+{language:  'Russia', value :3743},
+{language:  'Germany', value :3636},
+{language:  'Australia', value :3136},
+{language:  'Canada', value :3066},
+{language:  'Italy', value :3010},
+{language:  'China', value :3004},
+{language:  'France', value :2986},
+{language:  'Japan', value :2739},
+{language:  'Great Britain', value :2556},
+{language:  'Ukraine', value :2008},
+{language:  'Spain', value :1995},
+{language:  'South Korea', value :1913},
+{language:  'Brazil', value :1779},
+{language:  'Poland', value :1709},];
+colors=["#00A5E3","#FF96C5","#00CDAC","#FFA23A","#74737A","#74737A","#74737A","#74737A","#74737A","#74737A","#74737A","#74737A","#74737A","#74737A","#74737A"]  
+var svg = d3.select("body") //create Svg element
+   .append("svg")
+   .attr('width', width + margin.right + margin.left)
+   .attr('height', height + margin.top + margin.bottom)
+   .style("border", "solid 1px grey")
+    .attr("transform","translate(200,0)");                 
+var chart=svg.append('g')
+   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+   .attr('width', width)
+   .attr('height', height)
+var pie=d3.pie() 
+        .value(d => d.value)
+var color_scale=d3.scaleOrdinal()
+              .domain(data.map(d=>d.language))
+              .range(colors)
+let arc=d3.arc()
+       .outerRadius(150)
+       .innerRadius(0)
+var p_chart=chart.selectAll("pie")
+     .data(pie(data))
+     .enter()
+     .append("g")
+     .attr('transform', 'translate(170,230)') 
+p_chart.append("path")
+     .attr("d",arc) 
+     .attr("fill",d=>{
+       return color_scale(d.data.language);
+     })     
+p_chart.append("text")
+      .text(function(d){ return d.data.language})
+      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")";  }) 
+      .style("text-anchor", "middle")        
+//});
+</script>
 </html>
 
 
