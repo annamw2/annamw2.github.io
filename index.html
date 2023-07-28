@@ -35,13 +35,14 @@
             y.domain([0, d3.max(data, function(d) { return d.Age; })]);
                      
          
-             svg.selectAll("rect")
-             .data(data)
-             .join("rect")
-             .attr("x", 2)svg
-             .attr("y", 0)
-             .attr("width", 0.3)
-             .attr("height", 200);
+             
+            svg.selectAll(".bar")
+               .data(data)
+               .enter()
+               .append("rect")
+               .attr("class", "bar") 
+               .attr("x", 2)
+               .attr("y", 1)
     
           
           
