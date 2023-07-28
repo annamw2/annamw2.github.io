@@ -13,11 +13,36 @@
       font-weight: normal;
       color: #888;
     }
+      h2 {
+      font-size: 24px;
+      font-weight: normal;
+      color: #888;
+    }
+    .button-container {
+      margin: 20px;
+    }
+    .button {
+      display: inline-block;
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .chart-container {
+      width: 600px;
+      height: 400px;
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
 <h1>Analysis of Olympics Since 1896</h1>
 <h2>Top 15 Countries in Number of Athletes Sent to Olympics</h2>
+    <div class="button-container">
 <button onclick="goToPage('index2.html')">Page 1</button>
 <button onclick="goToPage('page2.html')">Page 2</button>
 <button onclick="goToPage('page3.html')">Page 3</button>
@@ -25,6 +50,9 @@
     function goToPage(url) {
       window.location.href = url;
     }
+    </div>
+  
+  <div class="chart-container">
   </script>
 <script>
 // D3 Code 
