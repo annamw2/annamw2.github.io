@@ -11,28 +11,25 @@
    <body>
       <svg width = "500" height = "500"></svg>
       <script>
-       
+  
 
          d3.csv("https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete", function(error, data) {
             if (error) {
                throw error;
             }
                
-            const data = [15]; // Change this value to any number you like
+            const data2 = [15]; // Change this value to any number you like
 
-               // Set the dimensions of the canvas
-               const width = 200;
-               const height = 100;
+           
                
-               // Create the SVG canvas
                const svg = d3.select("#barGraph")
                  .append("svg")
                  .attr("width", width)
                  .attr("height", height);
                
-               // Create the bar
+              
                const barWidth = 50;
-               const barHeight = data[0];
+               const barHeight = data2[0];
                svg.append("rect")
                  .attr("x", (width - barWidth) / 2)
                  .attr("y", height - barHeight)
