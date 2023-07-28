@@ -12,24 +12,30 @@
 
 // Fetch data from the URL source 
 //const dataURL = "https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete"; // Replace with the actual URL source
-const data_raw = d3.csv(
-  "https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete"
-)
+//const data_raw =
+//d3.csv(dataURL)
+d3.csv("https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846c9c/raw/37aafc2f7ed404b56fb7b6ccaf7064c7823f267c/Athlete").then(data => {
+  // Assuming the fetched data contains a "Height" field
 
-const width = 400;
-const height = 300;
+  // Create a scale for the x-axis (using index for simplicity)
+  const xScale = d3.scaleBand()
+    .domain(data.map((d, i) => i))
+    .range([0, width])
+    .padding(0.1);
 
-// Create the SVG canvas
-const svg = d3.select("#graph")
-  .append("svg")
-  .attr("width", width)
-  .attr("height", height);
+  // Create a scale for the y-axis (using the "Height" field)
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(data, d => +d.Height)])
+    .range([height, 0]);
 
-// Create a circle in the center of the canvas
-const circleRadius = 50;
-const circle = svg.append("rect")
-  .attr("x", (d) => d.Age)
-  .attr("y", 2)
-  .attr("width", 2)
-  .attr("height", 2)
-  .attr("fill", "steelblue");
+  // Create the bars
+  svg.selectAll("rect")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("x", (d, i) => xScale(i))
+    .attr("y", d => yScale(+d.Height))
+    .attr("width", xScale.bandwidth())
+    .attr("height", d => height - yScale(+d.Height))
+    .attr("fill", "steelblue");
+})
