@@ -35,7 +35,6 @@
             y.domain([0, d3.max(data, function(d) { return d.Age; })]);
                      
             svg.selectAll(".bar")
-               .enter()
                .append("rect")
                .attr("class", "bar") 
                .attr("x", 2)
