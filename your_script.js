@@ -27,8 +27,9 @@ const svg = d3.select("#graph")
 
 // Create a circle in the center of the canvas
 const circleRadius = 50;
-const circle = svg.append("circle")
-  .attr("cx", width / 2)
-  .attr("cy", height / 2)
-  .attr("r", circleRadius)
+const circle = svg.append("rect")
+  .attr("x", (d) => d.Age)
+  .attr("y", 2)
+  .attr("width", 2)
+  .attr("height", 2)
   .attr("fill", "steelblue");
