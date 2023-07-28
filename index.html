@@ -44,7 +44,7 @@
                throw error;
             }
                
-            x.domain(data.map(function(d) { return d.Age; }));
+            x.domain(data.map(function(d) { return d.Year; }));
             y.domain([0, d3.max(data, function(d) { return d.Height; })]);
                      
             g.append("g")
@@ -55,7 +55,7 @@
                .attr("x", width - 100)
                .attr("text-anchor", "end")
                .attr("font-size", "18px")
-               .attr("stroke", "blue").text("Age");
+               .attr("stroke", "blue").text("Year");
                
             g.append("g")
                .append("text")
@@ -78,7 +78,7 @@
                .attr("class", "bar")
                .on("mouseover", onMouseOver) 
                .on("mouseout", onMouseOut)   
-               .attr("x", function(d) { return x(d.Age); })
+               .attr("x", function(d) { return x(d.Year); })
                .attr("y", function(d) { return y(d.Height); })
                .attr("width", x.bandwidth()).transition()
                .ease(d3.easeLinear).duration(200)
@@ -88,45 +88,8 @@
                   
             .attr("height", function(d) { return height - y(d.Height); });
          });
-          
-          
-         function onMouseOver(d, i) {
-            d3.select(this)
-            .attr('class', 'highlight');
-               
-            d3.select(this)
-               .transition()     
-               .duration(200)
-               .attr('width', x.bandwidth() + 5)
-               .attr("y", function(d) { return y(d.Height) - 10; })
-               .attr("height", function(d) { return height - y(d.Height) + 10; });
-              
-            g.append("text")
-               .attr('class', 'val')
-               .attr('x', function() {
-                  return x(d.Age);
-               })
-               
-            .attr('y', function() {
-               return y(d.value) - 10;
-            })
-         }
-          
-         function onMouseOut(d, i) {
-             
-            d3.select(this)
-               .attr('class', 'bar');
-            
-            d3.select(this)
-               .transition()     
-               .duration(200)
-               .attr('width', x.bandwidth())
-               .attr("y", function(d) { return y(d.Height); })
-               .attr("height", function(d) { return height - y(d.Height); });
-            
-            d3.selectAll('.val')
-               .remove()
-         }
+
+  
       </script>
    </body>
 </html>
