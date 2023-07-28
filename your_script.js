@@ -33,9 +33,9 @@ d3.csv("https://gist.githubusercontent.com/annamw2/859de9d40a62a5709a893d1949846
     .data(data)
     .enter()
     .append("rect")
-    .attr("x", (d, i) => xScale(i))
-    .attr("y", d => yScale(+d.Height))
-    .attr("width", xScale.bandwidth())
-    .attr("height", d => height - yScale(+d.Height))
+    .attr("x", 1)
+    .attr("y",2)
+    .attr("width",1)
+    .attr("height", 2)
     .attr("fill", "steelblue");
 })
