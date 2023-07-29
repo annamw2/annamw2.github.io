@@ -130,7 +130,31 @@ svg.append("path")
   .attr("d", line);
 
     
+const annotations = [
+  {year:  1904, percentage :0.632590315142198 , text: 'Highest' }},
+];
 
+// Draw annotations
+const annotationGroup = svg.append("g")
+  .attr("class", "annotations");
+
+annotationGroup.selectAll("circle")
+  .data(annotations)
+  .enter()
+  .append("circle")
+  .attr("cx", d => xScale(d.year))
+  .attr("cy", d => yScale(d.percentage))
+  .attr("r", 5)
+  .attr("fill", "red");
+
+annotationGroup.selectAll("text")
+  .data(annotations)
+  .enter()
+  .append("text")
+  .attr("x", d => xScale(d.year) + 10)
+  .attr("y", d => yScale(d.percentage) - 10)
+  .text(d => d.text)
+  .attr("fill", "black");
   
          
 // Add x-axis
