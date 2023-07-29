@@ -89,9 +89,9 @@ var svg = d3.select("#my_dataviz")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
-//Read the data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv", function(data) {
-
+  const data = [
+  {year:  1924, n :1400, name: 'Deborah'},];
+   
     // List of groups (here I have one group per column)
     var allGroup = d3.map(data, function(d){return(d.name)}).keys()
 
@@ -162,8 +162,6 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
         // run the updateChart function with this selected option
         update(selectedOption)
     })
-
-})
       </script>
   </div>
 </div>
