@@ -120,7 +120,17 @@ const yScale = d3.scaleLinear()
   .domain([0, d3.max(data, d => d.n)])
   .range([height - margin.bottom, margin.top]);
 
-// Function to draw the lines based on the selected name
+svg.append("g")
+  .attr("class", "x-axis")
+  .attr("transform", `translate(0, ${height - margin.bottom})`)
+  .call(d3.axisBottom(xScale));
+
+// Create y-axis
+svg.append("g")
+  .attr("class", "y-axis")
+  .attr("transform", `translate(${margin.left}, 0)`)
+  .call(d3.axisLeft(yScale).ticks(5));
+
 function updateGraph(selectedName) {
   const filteredData = data.filter(d => d.name === selectedName);
 
@@ -148,6 +158,8 @@ nameFilter.on("change", function () {
 
 // Initial rendering of the graph with the first name selected
 updateGraph(names[0]);
+
+          
       </script>
   </div>
 </div>
