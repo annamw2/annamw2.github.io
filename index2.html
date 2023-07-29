@@ -117,7 +117,6 @@ svg.append("g")
         </script> 
     </div>
     <div class="graph" id="graph2">
-  <h1>Analysis of Olympics Since 1896</h1>
   <script>
     
     const data2 = [
@@ -125,7 +124,7 @@ svg.append("g")
   { year: 2005, percentage: .40 },
   { year: 2010, percentage: .35 },
   { year: 2015, percentage: .50 },
-  { year: 2020, percentage: .45 }
+  { year: 2020, percentage: 1 }
 ];
 
 
@@ -135,13 +134,17 @@ const svg2 = d3.select("body")
   .attr("width", width)
   .attr("height", height);
 
+const line2 = d3.line()
+  .x(d => xScale(d.year))
+  .y(d => yScale(d.percentage));
+
 // Create the line path
 svg2.append("path")
   .datum(data2)
   .attr("fill", "none")
   .attr("stroke", "steelblue")
   .attr("stroke-width", 2)
-  .attr("d", line);
+  .attr("d", line2);
 
 // Add x-axis
 svg2.append("g")
