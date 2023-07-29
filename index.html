@@ -124,29 +124,7 @@
           .text((d) => `Sales were ${d.language} in ${d.value}`);
 
 
-         
-        const amsterdamPoint = data.find(d => d.language === 'Italy');
-        const annotationX = xScale(amsterdamPoint.language) + xScale.bandwidth() / 2;
-        const annotationY = yScale(amsterdamPoint.value) - 10;
         
-        svg.append("text")
-          .attr("x", annotationX)
-          .attr("y", annotationY)
-          .attr("text-anchor", "middle")
-          .style("font-size", "12px")
-          .text("here")
-          .attr("fill", "black");
-
-        // Draw line from annotation to plot point
-        svg.append("line")
-           .attr("x1", annotationX)
-          .attr("y1", annotationY)
-          .attr("x2", xScale(amsterdamPoint.language) + xScale.bandwidth() / 2)
-          .attr("y2", yScale(amsterdamPoint.value))
-          .attr("stroke", "black")
-          .attr("stroke-width", 1)
-          .attr("stroke-dasharray", "5,5");
-         
         // Add x-axis
         svg.append("g")
           .attr("transform", `translate(0, ${height - margin.bottom})`)
@@ -173,7 +151,7 @@
               {language:  'Albertville', value :1},
 {language:  'Amsterdam', value :1},
 {language:  'Antwerpen', value :1},
-{language:  'Athina', value :3},
+{language:  'Athens', value :3},
 {language:  'Atlanta', value :1},
 {language:  'Barcelona', value :1},
 {language:  'Beijing', value :1},
@@ -242,7 +220,28 @@
               .attr("height", d => height - margin.bottom - yScale2(d.value))
               .attr("fill", "steelblue");
 
+ const amsterdamPoint = data2.find(d => d.language === 'Athens');
+        const annotationX = xScale2(amsterdamPoint.language) + xScale2.bandwidth() / 2;
+        const annotationY = yScale2(amsterdamPoint.value) - 10;
+        
+        svg2.append("text")
+          .attr("x", annotationX)
+          .attr("y", annotationY)
+          .attr("text-anchor", "middle")
+          .style("font-size", "12px")
+          .text("First modern Olympics held in 1894")
+          .attr("fill", "black");
 
+        // Draw line from annotation to plot point
+        svg2.append("line")
+           .attr("x1", annotationX)
+          .attr("y1", annotationY)
+          .attr("x2", xScale2(amsterdamPoint.language) + xScale.bandwidth() / 2)
+          .attr("y2", yScale2(amsterdamPoint.value))
+          .attr("stroke", "black")
+          .attr("stroke-width", 1)
+          .attr("stroke-dasharray", "5,5");
+         
             // Add x-axis
             svg2.append("g")
               .attr("transform", `translate(0, ${height - margin.bottom})`)
