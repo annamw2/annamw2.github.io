@@ -146,33 +146,63 @@
         <div class="graph" id="graph2">
           <script>
               
-              var chart2 = d3.select("body")
-            .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-                
-
-            // Scale the range of the data
-            x.domain(d3.extent(data, function(d) { return d.language; }));
-            y.domain([0, d3.max(data, function(d) { return d.value; })]);
-        
-            // Add the valueline path.
-            chart2.append("path")
-                .attr("class", "line")
-                .attr("d", valueline(data));
-        
-            // Add the X Axis
-            chart2.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
-        
-            // Add the Y Axis
-            chart2.append("g")
-                .attr("class", "y axis")
-                .call(yAxis);
+             const data2 = [
+              { language: 'Albertville', value: 1 },
+              { language: 'Amsterdam', value: 1 },
+              { language: 'Antwerpen', value: 1 },
+            ];
+            
+    
+            // Create the SVG canvas
+            const svg2 = d3.select("body")
+              .append("svg")
+              .attr("width", width)
+              .attr("height", height);
+            
+            // Create x and y scales
+            const xScale2 = d3.scaleBand()
+              .domain(data2.map(d => d.language))
+              .range([margin.left, width - margin.right])
+              .padding(0.1);
+            
+            const yScale2 = d3.scaleLinear()
+              .domain([0, d3.max(data2, d => d.value)])
+              .range([height - margin.bottom, margin.top]);
+            
+            // Draw the bars
+            svg2.selectAll("rect")
+              .data(data2)
+              .enter()
+              .append("rect")
+              .attr("x", d => xScale2(d.language))
+              .attr("y", d => yScale2(d.value))
+              .attr("width", xScale2.bandwidth())
+              .attr("height", d => height - margin.bottom - yScale2(d.value))
+              .attr("fill", "steelblue");
+            
+            // Add x-axis
+            svg2.append("g")
+              .attr("transform", `translate(0, ${height - margin.bottom})`)
+              .call(d3.axisBottom(xScale2));
+            
+            // Add y-axis
+            svg2.append("g")
+              .attr("transform", `translate(${margin.left}, 0)`)
+              .call(d3.axisLeft(yScale2).ticks(5));
+            
+            // Add axis labels
+            svg2.append("text")
+              .attr("x", width / 2)
+              .attr("y", height - 5)
+              .attr("text-anchor", "middle")
+              .text("Language");
+            
+            svg2.append("text")
+              .attr("x", -height / 2)
+              .attr("y", margin.left - 10)
+              .attr("transform", "rotate(-90)")
+              .attr("text-anchor", "middle")
+              .text("Value");
     
     </script> 
     </div>
