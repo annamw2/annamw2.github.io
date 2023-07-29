@@ -141,14 +141,7 @@ svg.append("path")
           .text("First modern Olympics held in 1894")
           .attr("fill", "black");
 
-        // Draw line from annotation to plot point
-        svg.append("line")
-           .attr("x1", annotationX + 120 )
-          .attr("y1", annotationY + 30 )
-          .attr("x2", xScale(amsterdamPoint.language))
-          .attr("y2", yScale(amsterdamPoint.value) + 10)
-          .attr("stroke", "black")
-          .attr("stroke-width", 1);
+  
          
 // Add x-axis
 svg.append("g")
