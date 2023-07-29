@@ -90,7 +90,11 @@ var svg = d3.select("#my_dataviz")
           "translate(" + margin.left + "," + margin.top + ")");
 
   const data = [
-  {year:  1924, n :1400, name: 'Deborah'},];
+ {name:  'Athletics' , year:  1896,  n :12},
+ {name:  'Athletics' , year:  1897,  n :6},
+ {name:  'Athletics' , year:  1898,  n :3},
+ {name:  'Gymnastics' , year:  1896,  n :26},
+ {name:  'Shooting' , year:  1896,  n :5},];
    
     // List of groups (here I have one group per column)
     var allGroup = d3.map(data, function(d){return(d.name)}).keys()
