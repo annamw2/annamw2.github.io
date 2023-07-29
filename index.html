@@ -39,7 +39,7 @@
       border-color: #007bff;
     }
     .graph-container {
-      display: center;
+      display: flex;
     }
     .graph {
       width: 50%;
@@ -73,8 +73,10 @@
       window.location.href = url;
     }
   </script>
- <div class="graph-container">
-    <div class="graph" id="graph1">
+ <div class="chart-container">
+    <div class="chart" id="chart1"></div>
+    <div class="chart" id="chart2"></div>
+  </div>
      <script>
         data = [{language:  'United States', value :17847},
                 {language:  'France', value :11988},
@@ -92,7 +94,7 @@
         const margin = { top: 20, right: 20, bottom: 30, left: 50 };
         
         // Create the SVG canvas
-        const svg = d3.select("body")
+        const svg = d3.select("#chart1")
             .append("svg")
           .attr("width", width)
           .attr("height", height);
@@ -140,10 +142,6 @@
         svg.append("g")
           .attr("transform", `translate(${margin.left}, 0)`)
           .call(d3.axisLeft(yScale).ticks(5));
-    </script> 
-    </div>
-        <div class="graph" id="graph2">
-          <script>
               
              const data2 = [
               { language: 'Albertville', value: 1 },
@@ -153,7 +151,7 @@
             
     
             // Create the SVG canvas
-            const svg2 = d3.select("body")
+            const svg2 = d3.select("#chart2")
               .append("svg")
               .attr("width", width)
               .attr("height", height);
@@ -204,7 +202,6 @@
               .text("Value");
     
     </script> 
-    </div>
     </div>
 </body>
 </html>
