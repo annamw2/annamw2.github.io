@@ -92,6 +92,16 @@ const data = [
   { name: 'Shooting', year: 1896, n: 5, Medal: "Gold" }
 ];
 
+const names = [...new Set(data.map(d => d.name))];
+
+// Create the drop-down filter for name
+const nameFilter = d3.select("#nameFilter");
+nameFilter.selectAll("option")
+  .data(names)
+  .enter()
+  .append("option")
+  .text(d => d);
+
 // Set the dimensions of the canvas
 const width = 600;
 const height = 400;
@@ -103,18 +113,7 @@ const svg = d3.select("#lineGraph")
   .attr("width", width)
   .attr("height", height);
 
-// Extract unique names (medals) for the drop-down filter
-const names = [...new Set(data.map(d => d.name))];
-
-// Create the drop-down filter for name
-const nameFilter = d3.select("#nameFilter");
-nameFilter.selectAll("option")
-  .data(names)
-  .enter()
-  .append("option")
-  .text(d => d);
-
-// Create scales for the x and y axes
+// Create x and y scales
 const xScale = d3.scaleLinear()
   .domain(d3.extent(data, d => d.year))
   .range([margin.left, width - margin.right]);
@@ -123,34 +122,35 @@ const yScale = d3.scaleLinear()
   .domain([0, d3.max(data, d => d.n)])
   .range([height - margin.bottom, margin.top]);
 
-svg.append("g")
-  .attr("class", "x-axis")
-  .attr("transform", `translate(0, ${height - margin.bottom})`)
-  .call(d3.axisBottom(xScale));
+// Create a line generator
+const lineGenerator = d3.line()
+  .x(d => xScale(d.year))
+  .y(d => yScale(d.n));
 
-// Create y-axis
-svg.append("g")
-  .attr("class", "y-axis")
-  .attr("transform", `translate(${margin.left}, 0)`)
-  .call(d3.axisLeft(yScale).ticks(5));
-
+// Function to draw the multiline graph
 function updateGraph(selectedName) {
   const filteredData = data.filter(d => d.name === selectedName);
 
-  const lineGenerator = d3.line()
-    .x(d => xScale(d.year))
-    .y(d => yScale(d.n));
+  // Create an array of medals from the filtered data
+  const medals = [...new Set(filteredData.map(d => d.Medal))];
 
+  // Create a color scale for different medals
+  const colorScale = d3.scaleOrdinal()
+    .domain(medals)
+    .range(d3.schemeCategory10);
+
+  // Remove any existing lines
+  svg.selectAll(".line").remove();
+
+  // Draw each line based on the medal
   const lines = svg.selectAll(".line")
-    .data([filteredData], d => d[0].name);
-
-  lines.enter()
+    .data(medals)
+    .enter()
     .append("path")
     .attr("class", "line")
-    .attr("d", lineGenerator)
-    .style("stroke", (d, i) => d[0].Medal === "Gold" ? "gold" : (d[0].Medal === "Silver" ? "black" : "brown"));
-
-  lines.exit().remove();
+    .attr("d", medal => lineGenerator(filteredData.filter(d => d.Medal === medal)))
+    .attr("fill", "none")
+    .attr("stroke", medal => colorScale(medal));
 }
 
 // Listen for changes in the drop-down filter
@@ -161,7 +161,6 @@ nameFilter.on("change", function () {
 
 // Initial rendering of the graph with the first name selected
 updateGraph(names[0]);
-
           
       </script>
   </div>
