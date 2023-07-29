@@ -67,7 +67,7 @@
       <a class="button" href="index2.html">The USA</a>
       <a class="button" href="index3.html">Events</a>
   </div>
-<h2>Top 10 Countries in Number of Athletes Sent to Olympics</h2>
+<h2>Participants and Locations</h2>
   <script>
     function goToPage(url) {
       window.location.href = url;
@@ -236,7 +236,7 @@
         svg2.append("line")
            .attr("x1", annotationX + 120 )
           .attr("y1", annotationY + 30 )
-          .attr("x2", xScale2(amsterdamPoint.language) + xScale.bandwidth() / 2)
+          .attr("x2", xScale2(amsterdamPoint.language) - 5)
           .attr("y2", yScale2(amsterdamPoint.value) + 10)
           .attr("stroke", "black")
           .attr("stroke-width", 1);
