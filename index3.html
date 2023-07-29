@@ -96,16 +96,6 @@ var svg = d3.select("#my_dataviz")
  {name:  'Gymnastics' , year:  1896,  n :26, , Medal: 'Gold'},
  {name:  'Shooting' , year:  1896,  n :5, Medal: 'Gold'},];
 
-    var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
-        .key(function(d) { return d.Medal;})
-        .entries(data);
-    // List of groups (here I have one group per column)
-    var allGroup = d3.map(data, function(d){return(d.Medal)}).keys()
-
-    var res = sumstat.map(function(d){ return d.key }) // list of group names
-  var colors = d3.scaleOrdinal()
-    .domain(res)
-    .range(['#e41a1c','#377eb8','#4daf4a'])
 
     // add the options to the button
     d3.select("#selectButton")
