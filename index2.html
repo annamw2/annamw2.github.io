@@ -138,6 +138,14 @@ svg.append("g")
 svg.append("g")
   .attr("transform", `translate(${margin.left}, 0)`)
   .call(d3.axisLeft(yScale).tickFormat(d3.format(".0%")));
+
+        svg.append("text")
+              .attr("x", width / 2)
+              .attr("y", margin.top / 2)
+              .attr("text-anchor", "middle")
+              .style("font-size", "18px")
+             .attr("fill", "lightgrey")
+              .text("Summer Games");
         </script> 
     </div>
     <div class="graph" id="graph2">
@@ -200,6 +208,14 @@ svg2.append("g")
 svg2.append("g")
   .attr("transform", `translate(${margin.left}, 0)`)
   .call(d3.axisLeft(yScale).tickFormat(d3.format(".0%")));
+      
+         svg2.append("text")
+              .attr("x", width / 2)
+              .attr("y", margin.top / 2)
+              .attr("text-anchor", "middle")
+              .style("font-size", "18px")
+             .attr("fill", "lightgrey")
+              .text("Winter Games");
         </script> 
     </div>
   </div>
