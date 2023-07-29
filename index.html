@@ -242,13 +242,15 @@
 
 // Draw line from annotation to plot point
 svg.append("line")
-  .attr("x1", annotationX)
+   .attr("x1", annotationX)
   .attr("y1", annotationY)
   .attr("x2", xScale(amsterdamPoint.language) + xScale.bandwidth() / 2)
   .attr("y2", yScale(amsterdamPoint.value))
   .attr("stroke", "black")
   .attr("stroke-width", 1)
-  .attr("stroke-da
+  .attr("stroke-dasharray", "5,5");
+
+
             // Add x-axis
             svg2.append("g")
               .attr("transform", `translate(0, ${height - margin.bottom})`)
