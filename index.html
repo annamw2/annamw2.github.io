@@ -228,14 +228,14 @@
           .attr("x", annotationX + 120 )
           .attr("y", annotationY + 40)
           .attr("text-anchor", "middle")
-          .style("font-size", "12px")
-          .text("First modern Olympics \n held in 1894")
+          .style("font-size", "10px")
+          .text("First modern Olympics held in 1894")
           .attr("fill", "black");
 
         // Draw line from annotation to plot point
         svg2.append("line")
-           .attr("x1", annotationX)
-          .attr("y1", annotationY)
+           .attr("x1", annotationX + 120 )
+          .attr("y1", annotationY + 30 )
           .attr("x2", xScale2(amsterdamPoint.language) + xScale.bandwidth() / 2)
           .attr("y2", yScale2(amsterdamPoint.value))
           .attr("stroke", "black")
