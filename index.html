@@ -38,11 +38,6 @@
       color: #fff;
       border-color: #007bff;
     }
-    .chart-container {
-      width: 1px;
-      height: 1px;
-      margin: 0 auto;
-    }
     .graph-container {
       display: flex;
     }
@@ -128,23 +123,7 @@
               .attr("width", xScale.bandwidth())
               .attr("height", d => height - margin.bottom - yScale(d.value))
               .attr("fill", d => colorScale(d.language)) // Set the fill color based on the language
-              // Add tooltip on hover
-              .on("mouseenter", function (event, d) {
-                const x = xScale(d.language) + xScale.bandwidth() / 2;
-                const y = yScale(d.value) - 10;
-                svg.append("text")
-                  .attr("id", "tooltip")
-                  .attr("x", x)
-                  .attr("y", y)
-                  .attr("text-anchor", "middle")
-                  .text(d.value)
-                  .style("font-size", "12px")
-                  .style("font-weight", "bold")
-                  .style("fill", "#333");
-              })
-              .on("mouseleave", function (event, d) {
-                svg.select("#tooltip").remove();
-              });
+       \
             
             // Add x-axis
             svg.append("g")
