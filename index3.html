@@ -93,7 +93,7 @@ var svg = d3.select("#my_dataviz")
  {name:  'Athletics' , year:  1896,  n :12, Medal: 'Gold'},
  {name:  'Athletics' , year:  1897,  n :6, Medal: 'Silver'},
  {name:  'Athletics' , year:  1898,  n :3, Medal: 'Gold'},
- {name:  'Gymnastics' , year:  1896,  n :26, , Medal: 'Gold': 'Gold'},
+ {name:  'Gymnastics' , year:  1896,  n :26, , Medal: 'Gold'},
  {name:  'Shooting' , year:  1896,  n :5, Medal: 'Gold'},];
 
     var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
@@ -103,7 +103,7 @@ var svg = d3.select("#my_dataviz")
     var allGroup = d3.map(data, function(d){return(d.Medal)}).keys()
 
     var res = sumstat.map(function(d){ return d.key }) // list of group names
-  var color = d3.scaleOrdinal()
+  var colors = d3.scaleOrdinal()
     .domain(res)
     .range(['#e41a1c','#377eb8','#4daf4a'])
 
