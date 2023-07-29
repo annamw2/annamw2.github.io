@@ -147,7 +147,7 @@ function updateGraph(selectedName) {
     .append("path")
     .attr("class", "line")
     .attr("d", lineGenerator)
-    .style("stroke", (d, i) => d[0].Medal === "Gold" ? "gold" : (d[0].Medal === "Silver" ? "silver" : "brown"));
+    .style("stroke", (d, i) => d[0].Medal === "Gold" ? "gold" : (d[0].Medal === "Silver" ? "black" : "brown"));
 
   lines.exit().remove();
 }
