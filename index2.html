@@ -129,6 +129,27 @@ svg.append("path")
   .attr("stroke-width", 2)
   .attr("d", line);
 
+         const amsterdamPoint = data.find(d => d.year === '1904');
+        const annotationX = xScale2(amsterdamPoint.year) + xScale2.bandwidth() / 2;
+        const annotationY = yScale2(amsterdamPoint.percentage) - 10;
+        
+        svg.append("text")
+          .attr("x", annotationX + 120 )
+          .attr("y", annotationY + 40)
+          .attr("text-anchor", "middle")
+          .style("font-size", "10px")
+          .text("First modern Olympics held in 1894")
+          .attr("fill", "black");
+
+        // Draw line from annotation to plot point
+        svg.append("line")
+           .attr("x1", annotationX + 120 )
+          .attr("y1", annotationY + 30 )
+          .attr("x2", xScale(amsterdamPoint.language))
+          .attr("y2", yScale(amsterdamPoint.value) + 10)
+          .attr("stroke", "black")
+          .attr("stroke-width", 1);
+         
 // Add x-axis
 svg.append("g")
   .attr("transform", `translate(0, ${height - margin.bottom})`)
