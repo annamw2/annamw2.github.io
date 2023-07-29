@@ -69,6 +69,84 @@
       <option value="Silver">Silver</option>
       <option value="Bronze">Bronze</option>
     </select>
+      <script>
+          const data = [
+  { medal: 'Gold', count: 36 },
+  { medal: 'Silver', count: 22 },
+  { medal: 'Bronze', count: 19 }
+];
+
+// Set the dimensions of the canvas
+const width = 400;
+const height = 300;
+const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+
+// Create the SVG canvas
+const svg = d3.select("body")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height);
+
+// Create scales for the x and y axes
+const xScale = d3.scaleBand()
+  .domain(data.map(d => d.medal))
+  .range([margin.left, width - margin.right])
+  .padding(0.1);
+
+const yScale = d3.scaleLinear()
+  .domain([0, d3.max(data, d => d.count)])
+  .range([height - margin.bottom, margin.top]);
+
+// Create the bars
+const bars = svg.selectAll(".bar")
+  .data(data)
+  .enter()
+  .append("rect")
+  .attr("class", "bar")
+  .attr("x", d => xScale(d.medal))
+  .attr("y", d => yScale(d.count))
+  .attr("width", xScale.bandwidth())
+  .attr("height", d => height - margin.bottom - yScale(d.count))
+  .attr("fill", "steelblue");
+
+// Add x-axis
+svg.append("g")
+  .attr("transform", `translate(0, ${height - margin.bottom})`)
+  .call(d3.axisBottom(xScale));
+
+// Add y-axis
+svg.append("g")
+  .attr("transform", `translate(${margin.left}, 0)`)
+  .call(d3.axisLeft(yScale).ticks(5));
+
+// Function to update the graph based on the selected medal
+function updateGraph(selectedMedal) {
+  const filteredData = (selectedMedal === "all") ? data : data.filter(d => d.medal === selectedMedal);
+
+  yScale.domain([0, d3.max(filteredData, d => d.count)]);
+
+  bars.data(filteredData)
+    .transition()
+    .duration(500)
+    .attr("y", d => yScale(d.count))
+    .attr("height", d => height - margin.bottom - yScale(d.count));
+
+  svg.select("g.y-axis")
+    .transition()
+    .duration(500)
+    .call(d3.axisLeft(yScale).ticks(5));
+}
+
+// Listen for changes in the drop-down menu
+const medalFilter = document.getElementById("medalFilter");
+medalFilter.addEventListener("change", function () {
+  const selectedMedal = medalFilter.value;
+  updateGraph(selectedMedal);
+});
+
+// Initial rendering of the graph
+updateGraph("all");
+      </script>
   </div>
 </div>
 </body>
