@@ -94,33 +94,27 @@ const data = [
 
 const names = [...new Set(data.map(d => d.name))];
 
-// Create the drop-down filter for name
-const nameFilter = d3.select("#nameFilter");
-nameFilter.selectAll("option")
-  .data(names)
-  .enter()
-  .append("option")
-  .text(d => d);
-
 // Set the dimensions of the canvas
-const width = 600;
-const height = 400;
-const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+const margin = { top: 30, right: 50, bottom: 50, left: 50 };
+const width = 600 - margin.left - margin.right;
+const height = 400 - margin.top - margin.bottom;
 
 // Create the SVG canvas
 const svg = d3.select("#lineGraph")
   .append("svg")
-  .attr("width", width)
-  .attr("height", height);
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Create x and y scales
 const xScale = d3.scaleLinear()
   .domain(d3.extent(data, d => d.year))
-  .range([margin.left, width - margin.right]);
+  .range([0, width]);
 
 const yScale = d3.scaleLinear()
   .domain([0, d3.max(data, d => d.n)])
-  .range([height - margin.bottom, margin.top]);
+  .range([height, 0]);
 
 // Create a line generator
 const lineGenerator = d3.line()
@@ -151,7 +145,49 @@ function updateGraph(selectedName) {
     .attr("d", medal => lineGenerator(filteredData.filter(d => d.Medal === medal)))
     .attr("fill", "none")
     .attr("stroke", medal => colorScale(medal));
+
+  // Create x-axis
+  svg.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(xScale).ticks(5));
+
+  // Create y-axis
+  svg.append("g")
+    .attr("class", "y-axis")
+    .call(d3.axisLeft(yScale).ticks(5));
+
+  // Create a legend
+  const legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("transform", `translate(${width - 100}, 10)`);
+
+  legend.selectAll("rect")
+    .data(medals)
+    .enter()
+    .append("rect")
+    .attr("x", 0)
+    .attr("y", (d, i) => i * 20)
+    .attr("width", 15)
+    .attr("height", 15)
+    .attr("fill", medal => colorScale(medal));
+
+  legend.selectAll("text")
+    .data(medals)
+    .enter()
+    .append("text")
+    .attr("x", 20)
+    .attr("y", (d, i) => i * 20 + 12)
+    .text(medal => medal);
 }
+
+// Create the drop-down filter for name
+const nameFilter = d3.select("#nameFilter");
+nameFilter.selectAll("option")
+  .data(names)
+  .enter()
+  .append("option")
+  .text(d => d);
 
 // Listen for changes in the drop-down filter
 nameFilter.on("change", function () {
