@@ -91,7 +91,7 @@
 
        const width = 500;
         const height = 400;
-        const margin = { top: 5, right: 5, bottom: 5, left: 5 };
+        const margin = { top: 10, right: 10, bottom: 10, left: 10};
         
         // Create the SVG canvas
         const svg = d3.select("#chart1")
@@ -103,7 +103,7 @@
         const xScale = d3.scaleBand()
           .domain(data.map(d => d.language))
           .range([margin.left, width - margin.right])
-          .padding(0.1);
+          .padding(1);
         
         const yScale = d3.scaleLinear()
           .domain([0, d3.max(data, d => d.value)])
