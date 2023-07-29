@@ -228,15 +228,27 @@
               .attr("height", d => height - margin.bottom - yScale2(d.value))
               .attr("fill", "steelblue");
 
-         const amsterdamPoint = data2.find(d => d.language === 'Amsterdam');
-            svg2.append("text")
-              .attr("x", xScale2(amsterdamPoint.language) + xScale.bandwidth() / 2)
-              .attr("y", yScale2(amsterdamPoint.value) - 10)
-              .attr("text-anchor", "middle")
-              .style("font-size", "12px")
-              .text("here")
-              .attr("fill", "black");
-         
+        const amsterdamPoint = data2.find(d => d.language === 'Amsterdam');
+        const annotationX = xScale2(amsterdamPoint.language) + xScale2.bandwidth() / 2;
+        const annotationY = yScale2(amsterdamPoint.value) - 10;
+        
+        svg2.append("text")
+          .attr("x", annotationX)
+          .attr("y", annotationY)
+          .attr("text-anchor", "middle")
+          .style("font-size", "12px")
+          .text("here")
+          .attr("fill", "black");
+
+// Draw line from annotation to plot point
+svg.append("line")
+  .attr("x1", annotationX)
+  .attr("y1", annotationY)
+  .attr("x2", xScale(amsterdamPoint.language) + xScale.bandwidth() / 2)
+  .attr("y2", yScale(amsterdamPoint.value))
+  .attr("stroke", "black")
+  .attr("stroke-width", 1)
+  .attr("stroke-da
             // Add x-axis
             svg2.append("g")
               .attr("transform", `translate(0, ${height - margin.bottom})`)
