@@ -176,8 +176,8 @@ const svg2 = d3.select("body")
   .attr("height", height);
 
 const xScale2 = d3.scaleLinear()
-  .domain([1928, 2014])
-  .range([margin.left, margin.right]);
+   .domain([1924, 2014])
+   .range([margin.left, width - margin.right]);
       
 const line2 = d3.line()
   .x(d => xScale(d.year))
