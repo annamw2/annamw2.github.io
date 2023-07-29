@@ -229,7 +229,7 @@
             
             // Add y-axis
             svg2.append("g")
-              //.attr("transform", `translate(${margin.left}, 0)`)
+              .attr("transform", `translate(${margin.left}, 0)`)
               .call(d3.axisLeft(yScale2).ticks(3));
 
 
