@@ -178,10 +178,6 @@ const svg2 = d3.select("body")
 const xScale2 = d3.scaleLinear()
   .domain(d3.extent(data2, d => d.year))
   .range([margin.left, width - margin.right]);
-
-const yScale2 = d3.scaleLinear()
-  .domain([0, 1]) // Set the domain from 0 to 100 (static)
-  .range([height - margin.bottom, margin.top]);
       
 const line2 = d3.line()
   .x(d => xScale(d.year))
@@ -203,7 +199,7 @@ svg2.append("g")
 // Add y-axis
 svg2.append("g")
   .attr("transform", `translate(${margin.left}, 0)`)
-  .call(d3.axisLeft(yScale2).tickFormat(d3.format(".0%")));
+  .call(d3.axisLeft(yScale).tickFormat(d3.format(".0%")));
         </script> 
     </div>
   </div>
