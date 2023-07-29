@@ -237,7 +237,7 @@
            .attr("x1", annotationX + 120 )
           .attr("y1", annotationY + 30 )
           .attr("x2", xScale2(amsterdamPoint.language) + xScale.bandwidth() / 2)
-          .attr("y2", yScale2(amsterdamPoint.value))
+          .attr("y2", yScale2(amsterdamPoint.value) + 5)
           .attr("stroke", "black")
           .attr("stroke-width", 1)
           .attr("stroke-dasharray", "5,5");
