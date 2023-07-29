@@ -45,6 +45,17 @@
       width: 50%;
       padding: 10px;
     }
+    .line {
+      fill: none;
+      stroke-width: 2;
+    }
+    .legend {
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -62,111 +73,80 @@
   </script>
 <h1>Medal Count Bar Graph</h1>
   <div>
-    <meta charset="utf-8">
-
-    <!-- Initialize a select button -->
-    <select id="selectButton"></select>
-    
-    <!-- Create a div where the graph will take place -->
-    <div id="my_dataviz"></div>
-    
-    <!-- Color Scale -->
-    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-
-    </select>
+   <div>
+    <label for="nameFilter">Filter by Name:</label>
+    <select id="nameFilter"></select>
+  </div>
+  <div id="lineGraph"></div>
       <script>
 // set the dimensions and margins of the graph
-var margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+const data = [
+  { name: 'Athletics', year: 1896, n: 12, Medal: "Gold" },
+  { name: 'Athletics', year: 1897, n: 6, Medal: "Silver" },
+  { name: 'Athletics', year: 1898, n: 3, Medal: "Gold" },
+  { name: 'Gymnastics', year: 1896, n: 26, Medal: "Gold" },
+  { name: 'Shooting', year: 1896, n: 5, Medal: "Gold" }
+];
 
-// append the svg object to the body of the page
-var svg = d3.select("#my_dataviz")
+// Set the dimensions of the canvas
+const width = 600;
+const height = 400;
+const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+
+// Create the SVG canvas
+const svg = d3.select("#lineGraph")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+  .attr("width", width)
+  .attr("height", height);
 
-  const data = [
-         {name:  'Athletics' , year:  1896,  n :12, Medal: "Gold"},
-         {name:  'Athletics' , year:  1897,  n :6, Medal: "Gold"},
-         {name:  'Athletics' , year:  1898,  n :3, Medal: "Gold"},
-         {name:  'Gymnastics' , year:  1896,  n :26, Medal: "Gold"},
-         {name:  'Shooting' , year:  1896,  n :5, Medal: "Gold"},];
+// Extract unique names (medals) for the drop-down filter
+const names = [...new Set(data.map(d => d.name))];
 
+// Create the drop-down filter for name
+const nameFilter = d3.select("#nameFilter");
+nameFilter.selectAll("option")
+  .data(names)
+  .enter()
+  .append("option")
+  .text(d => d);
 
-   // List of groups (here I have one group per column)
-    var allGroup = d3.map(data, function(d){return(d.name)}).keys()
+// Create scales for the x and y axes
+const xScale = d3.scaleLinear()
+  .domain(d3.extent(data, d => d.year))
+  .range([margin.left, width - margin.right]);
 
-    // add the options to the button
-    d3.select("#selectButton")
-      .selectAll('myOptions')
-     	.data(allGroup)
-      .enter()
-    	.append('option')
-      .text(function (d) { return d; }) // text showed in the menu
-      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+const yScale = d3.scaleLinear()
+  .domain([0, d3.max(data, d => d.n)])
+  .range([height - margin.bottom, margin.top]);
 
-    // A color scale: one color for each group
-    var myColor = d3.scaleOrdinal()
-      .domain(allGroup)
-      .range(d3.schemeSet2);
+// Function to draw the lines based on the selected name
+function updateGraph(selectedName) {
+  const filteredData = data.filter(d => d.name === selectedName);
 
-    // Add X axis --> it is a date format
-    var x = d3.scaleLinear()
-      .domain(d3.extent(data, function(d) { return d.year; }))
-      .range([ 0, width ]);
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x).ticks(7));
+  const lineGenerator = d3.line()
+    .x(d => xScale(d.year))
+    .y(d => yScale(d.n));
 
-    // Add Y axis
-    var y = d3.scaleLinear()
-      .domain([0, d3.max(data, function(d) { return +d.n; })])
-      .range([ height, 0 ]);
-    svg.append("g")
-      .call(d3.axisLeft(y));
+  const lines = svg.selectAll(".line")
+    .data([filteredData], d => d[0].name);
 
-    // Initialize line with first group of the list
-    var line = svg
-      .append('g')
-      .append("path")
-        .datum(data.filter(function(d){return d.name==allGroup[0]}))
-        .attr("d", d3.line()
-          .x(function(d) { return x(d.year) })
-          .y(function(d) { return y(+d.n) })
-        )
-        .attr("stroke", function(d){ return myColor("valueA") })
-        .style("stroke-width", 4)
-        .style("fill", "none")
+  lines.enter()
+    .append("path")
+    .attr("class", "line")
+    .attr("d", lineGenerator)
+    .style("stroke", (d, i) => d[0].Medal === "Gold" ? "gold" : (d[0].Medal === "Silver" ? "silver" : "brown"));
 
-    // A function that update the chart
-    function update(selectedGroup) {
+  lines.exit().remove();
+}
 
-      // Create new data with the selection?
-      var dataFilter = data.filter(function(d){return d.name==selectedGroup})
+// Listen for changes in the drop-down filter
+nameFilter.on("change", function () {
+  const selectedName = nameFilter.node().value;
+  updateGraph(selectedName);
+});
 
-      // Give these new data to update line
-      line
-          .datum(dataFilter)
-          .transition()
-          .duration(1000)
-          .attr("d", d3.line()
-            .x(function(d) { return x(d.year) })
-            .y(function(d) { return y(+d.n) })
-          )
-          .attr("stroke", function(d){ return myColor(selectedGroup) })
-    }
-
-    // When the button is changed, run the updateChart function
-    d3.select("#selectButton").on("change", function(d) {
-        // recover the option that has been chosen
-        var selectedOption = d3.select(this).property("value")
-        // run the updateChart function with this selected option
-        update(selectedOption)
-    })
+// Initial rendering of the graph with the first name selected
+updateGraph(names[0]);
       </script>
   </div>
 </div>
