@@ -117,16 +117,19 @@
           .attr("y", d => yScale(d.value))
           .attr("width", xScale.bandwidth())
           .attr("height", d => height - margin.bottom - yScale(d.value));
-          .on("mouseenter", function (event, d) {
-    const tooltip = svg.append("text")
-              .attr("class", "tooltip")
-              .attr("x", xScale(d.language) + xScale.bandwidth() / 2)
-              .attr("y", yScale(d.value) - 10)
-              .attr("text-anchor", "middle")
-              .text(d.value)
-              .style("font-size", "12px")
-              .style("font-weight", "bold")
-              .style("fill", "white");
+        
+         var tooltip = d3.select("body")
+          .append("div")
+            .style("position", "absolute")
+            .style("visibility", "hidden")
+            .text("I'm a circle!");
+        
+        //
+        d3.select("#circleBasicTooltip")
+          .on("mouseover", function(){return tooltip.style("visibility", "visible");})
+          .on("mousemove", function(){return tooltip.style("top", (event.pageY-800)+"px").style("left",(event.pageX-800)+"px");})
+          .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
 
         // Add x-axis
         svg.append("g")
