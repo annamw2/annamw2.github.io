@@ -43,7 +43,7 @@
     }
     .graph {
       width: 50%;
-      padding: 5px;
+      padding: 10px;
     }
     .bar {
       fill: steelblue;
@@ -74,8 +74,8 @@
     }
   </script>
  <div class="chart-container">
-    <div class="chart" id="chart1" style="display: inline"></div>
-    <div class="chart" id="chart2" style="display: inline"></div>
+    <div class="chart" id="chart1"></div>
+    <div class="chart" id="chart2"></div>
   </div>
      <script>
         data = [{language:  'United States', value :17847},
@@ -91,7 +91,7 @@
 
        const width = 500;
         const height = 400;
-        const margin = { top: 10, right: 10, bottom: 10, left: 10};
+        const margin = { top: 20, right: 20, bottom: 30, left: 50 };
         
         // Create the SVG canvas
         const svg = d3.select("#chart1")
@@ -103,7 +103,7 @@
         const xScale = d3.scaleBand()
           .domain(data.map(d => d.language))
           .range([margin.left, width - margin.right])
-          .padding(1);
+          .padding(0.1);
         
         const yScale = d3.scaleLinear()
           .domain([0, d3.max(data, d => d.value)])
