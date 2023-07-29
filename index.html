@@ -144,7 +144,56 @@
     </script> 
     </div>
         <div class="graph" id="graph2">
-          <h1>Analysis of Olympics Since 1896</h1>
+          <script>
+        data2 = [{language:  'United States', value :17847},
+                {language:  'France', value :11988},
+                {language:  'Great Britain', value :11404},
+                {language:  'Italy', value :10260},
+                {language:  'Germany', value :9326},
+                {language:  'Canada', value :9279},
+                {language:  'Japan', value :8289},
+                {language:  'Sweden', value :8052},
+                {language:  'Australia', value :7513},
+                {language:  'Hungary', value :6547},];
+        
+        // Create the SVG canvas
+        const svg2 = d3.select("body")
+            .append("svg")
+          .attr("width", width)
+          .attr("height", height);
+        
+        // Create scales for the x and y axes
+        const xScale2 = d3.scaleBand()
+          .domain(data2.map(d => d.language))
+          .range([margin.left, width - margin.right])
+          .padding(0.1);
+        
+        const yScale2 = d3.scaleLinear()
+          .domain([0, d3.max(data2, d => d.value)])
+          .range([height - margin.bottom, margin.top]);
+
+
+        // Create the bars
+        svg.selectAll(".bar")
+          .data(data2)
+          .enter()
+          .append("rect")
+          .attr("class", "bar")
+          .attr("x", d => xScale(d.language))
+          .attr("y", d => yScale(d.value))
+          .attr("width", xScale.bandwidth())
+          .attr("height", d => height - margin.bottom - yScale(d.value));
+
+        // Add x-axis
+        svg.append("g")
+          .attr("transform", `translate(0, ${height - margin.bottom})`)
+          .call(d3.axisBottom(xScale2));
+        
+        // Add y-axis
+        svg.append("g")
+          .attr("transform", `translate(${margin.left}, 0)`)
+          .call(d3.axisLeft(yScale2).ticks(5));
+    </script> 
     </div>
     </div>
 </body>
