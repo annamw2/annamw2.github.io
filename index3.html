@@ -2838,7 +2838,9 @@ function updateGraph(selectedName) {
   svg.append("g")
     .attr("class", "x-axis")
     .attr("transform", `translate(0, ${height})`)
-    .call(d3.axisBottom(xScale).ticks(12));
+    //.call(d3.axisBottom(xScale).ticks(12));
+    .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
+
 
   // Create y-axis
   svg.append("g")
