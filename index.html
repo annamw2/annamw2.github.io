@@ -145,7 +145,16 @@
         svg.append("g")
           .attr("transform", `translate(${margin.left}, 0)`)
           .call(d3.axisLeft(yScale).ticks(5));
-              
+
+
+          svg.append("text")
+              .attr("x", width / 2)
+              .attr("y", margin.top / 2)
+              .attr("text-anchor", "middle")
+              .style("font-size", "18px")
+             .attr("fill", "lightgrey")
+              .text("Top Countries by Athlete Participation");
+         
              const data2 = [
               {language:  'Albertville', value :1},
 {language:  'Amsterdam', value :1},
@@ -239,7 +248,7 @@
               .attr("text-anchor", "middle")
               .style("font-size", "18px")
              .attr("fill", "lightgrey")
-              .text("Bar Graph 1");
+              .text("Host Cities");
 
     
     </script> 
