@@ -90,14 +90,22 @@ var svg = d3.select("#my_dataviz")
           "translate(" + margin.left + "," + margin.top + ")");
 
   const data = [
- {name:  'Athletics' , year:  1896,  n :12},
- {name:  'Athletics' , year:  1897,  n :6},
- {name:  'Athletics' , year:  1898,  n :3},
- {name:  'Gymnastics' , year:  1896,  n :26},
- {name:  'Shooting' , year:  1896,  n :5},];
-   
+ {name:  'Athletics' , year:  1896,  n :12, Medal: 'Gold'},
+ {name:  'Athletics' , year:  1897,  n :6, Medal: 'Silver'},
+ {name:  'Athletics' , year:  1898,  n :3, Medal: 'Gold'},
+ {name:  'Gymnastics' , year:  1896,  n :26, , Medal: 'Gold': 'Gold'},
+ {name:  'Shooting' , year:  1896,  n :5, Medal: 'Gold'},];
+
+    var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
+        .key(function(d) { return d.Medal;})
+        .entries(data);
     // List of groups (here I have one group per column)
-    var allGroup = d3.map(data, function(d){return(d.name)}).keys()
+    var allGroup = d3.map(data, function(d){return(d.Medal)}).keys()
+
+    var res = sumstat.map(function(d){ return d.key }) // list of group names
+  var color = d3.scaleOrdinal()
+    .domain(res)
+    .range(['#e41a1c','#377eb8','#4daf4a'])
 
     // add the options to the button
     d3.select("#selectButton")
@@ -140,6 +148,11 @@ var svg = d3.select("#my_dataviz")
         .attr("stroke", function(d){ return myColor("valueA") })
         .style("stroke-width", 4)
         .style("fill", "none")
+      
+    var res = sumstat.map(function(d){ return d.key }) // list of group names
+      var color = d3.scaleOrdinal()
+        .domain(res)
+        .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'])
 
     // A function that update the chart
     function update(selectedGroup) {
