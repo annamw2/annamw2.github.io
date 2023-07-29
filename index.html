@@ -50,29 +50,9 @@
       width: 50%;
       padding: 10px;
     }
-      .bar {
-  fill: url(#barGradient);
-}
+     
 
-.bar:hover {
-  fill: url(#barGradientHover);
-}
 
-.bar-label {
-  font-size: 14px;
-  text-anchor: middle;
-  fill: #333;
-}
-
-#barGradient {
-  stop-color: #007bff;
-  stop-opacity: 0.8;
-}
-
-#barGradientHover {
-  stop-color: #007bff;
-  stop-opacity: 1;
-}
   </style>
 </head>
 <body>
@@ -108,50 +88,46 @@
         
         // Create the SVG canvas
         const svg = d3.select("body")
-          .append("svg")
-          .attr("width", width)
-          .attr("height", height);
-        
-        // Create scales for the x and y axes
-        const xScale = d3.scaleBand()
-          .domain(data.map(d => d.language))
-          .range([margin.left, width - margin.right])
-          .padding(0.1);
-        
-        const yScale = d3.scaleLinear()
-          .domain([0, d3.max(data, d => d.value)])
-          .range([height - margin.bottom, margin.top]);
-        
-        // Create the bars
-        svg.selectAll(".bar")
-          .data(data)
-          .enter()
-          .append("rect")
-          .attr("class", "bar")
-          .attr("x", d => xScale(d.language))
-          .attr("y", d => yScale(d.value))
-          .attr("width", xScale.bandwidth())
-          .attr("height", d => height - margin.bottom - yScale(d.value));
-        
-        // Add x-axis
-        svg.append("g")
-          .attr("transform", `translate(0, ${height - margin.bottom})`)
-          .call(d3.axisBottom(xScale));
-        
-        // Add y-axis
-        svg.append("g")
-          .attr("transform", `translate(${margin.left}, 0)`)
-          .call(d3.axisLeft(yScale).ticks(5));
-        
-        // Add labels to the bars
-        svg.selectAll(".bar-label")
-          .data(data)
-          .enter()
-          .append("text")
-          .attr("class", "bar-label")
-          .attr("x", d => xScale(d.language) + xScale.bandwidth() / 2)
-          .attr("y", d => yScale(d.value) - 5)
-          .text(d => d.value);
+            .append("svg")
+              .attr("width", width)
+              .attr("height", height);
+            
+            // Create scales for the x and y axes
+            const xScale = d3.scaleBand()
+              .domain(data.map(d => d.language))
+              .range([margin.left, width - margin.right])
+              .padding(0.1);
+            
+            const yScale = d3.scaleLinear()
+              .domain([0, d3.max(data, d => d.value)])
+              .range([height - margin.bottom, margin.top]);
+            
+            // Function to generate a different shade of blue for each bar
+            const colorScale = d3.scaleOrdinal()
+              .domain(data.map(d => d.language))
+              .range(d3.schemeBlues[data.length]);
+            
+            // Create the bars
+            svg.selectAll(".bar")
+              .data(data)
+              .enter()
+              .append("rect")
+              .attr("class", "bar")
+              .attr("x", d => xScale(d.language))
+              .attr("y", d => yScale(d.value))
+              .attr("width", xScale.bandwidth())
+              .attr("height", d => height - margin.bottom - yScale(d.value))
+              .attr("fill", d => colorScale(d.language)) // Set the fill color based on the language
+            
+            // Add x-axis
+            svg.append("g")
+              .attr("transform", `translate(0, ${height - margin.bottom})`)
+              .call(d3.axisBottom(xScale));
+            
+            // Add y-axis
+            svg.append("g")
+              .attr("transform", `translate(${margin.left}, 0)`)
+              .call(d3.axisLeft(yScale).ticks(5));
     </script> 
     </div>
         <div class="graph" id="graph2">
