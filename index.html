@@ -192,20 +192,15 @@
             svg2.append("g")
               .attr("transform", `translate(${margin.left}, 0)`)
               .call(d3.axisLeft(yScale2).ticks(5));
-            
-            // Add axis labels
-            svg2.append("text")
+
+
+         svg2.append("text")
               .attr("x", width / 2)
-              .attr("y", height - 5)
+              .attr("y", margin.top / 2)
               .attr("text-anchor", "middle")
-              .text("Language");
-            
-            svg2.append("text")
-              .attr("x", -height / 2)
-              .attr("y", margin.left - 10)
-              .attr("transform", "rotate(-90)")
-              .attr("text-anchor", "middle")
-              .text("Value");
+              .style("font-size", "18px")
+              .text("Bar Graph 1");
+
     
     </script> 
 </body>
