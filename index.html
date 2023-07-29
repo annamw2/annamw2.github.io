@@ -227,7 +227,16 @@
               .attr("width", xScale2.bandwidth())
               .attr("height", d => height - margin.bottom - yScale2(d.value))
               .attr("fill", "steelblue");
-            
+
+         const amsterdamPoint = data2.find(d => d.language === 'Amsterdam');
+            svg2.append("text")
+              .attr("x", xScale2(amsterdamPoint.language) + xScale.bandwidth() / 2)
+              .attr("y", yScale2(amsterdamPoint.value) - 10)
+              .attr("text-anchor", "middle")
+              .style("font-size", "12px")
+              .text("here")
+              .attr("fill", "black");
+         
             // Add x-axis
             svg2.append("g")
               .attr("transform", `translate(0, ${height - margin.bottom})`)
