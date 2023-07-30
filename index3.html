@@ -2842,7 +2842,7 @@ function updateGraph(selectedName) {
     .attr("cx", d => xScale(d.year))
     .attr("cy", d => yScale(d.n))
     .attr("r", 4)
-    .attr("fill", "steelblue");
+    .attr("fill", medal => colorScale(medal));
         
   // Create x-axis
  // svg.append("g")
