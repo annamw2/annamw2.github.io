@@ -2859,7 +2859,7 @@ function updateGraph(selectedName) {
   // Create y-axis
   svg.append("g")
     .attr("class", "y-axis")
-    .call(d3.axisLeft(yScale).ticks(25));
+    .call(d3.axisLeft(yScale).ticks(20));
 
   // Create a legend
   const legend = svg.append("g")
