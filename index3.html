@@ -2834,14 +2834,15 @@ function updateGraph(selectedName) {
     .attr("stroke", medal => colorScale(medal));
 
   // Create x-axis
-  //svg.append("g")
+ // svg.append("g")
   //  .attr("class", "x-axis")
-  //  .attr("transform", `translate(0, ${height})`)
-    //.call(d3.axisBottom(xScale).ticks(12));
+   // .attr("transform", `translate(0, ${height})`)
+   // .call(d3.axisBottom(xScale).ticks(12));
   //  .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
 // Add x-axis
     svg.append("g")
-      .attr("transform", `translate(0, ${height - margin.bottom})`)
+      .attr("transform", `translate(0, ${height})`)
+    //.attr("transform", `translate(0, ${height - margin.bottom})`)
       .call(d3.axisBottom(xScale).tickFormat(d3.format("d")));
 
   // Create y-axis
@@ -2859,7 +2860,7 @@ function updateGraph(selectedName) {
     .enter()
     .append("rect")
     .attr("x", 0)
-    .attr("y", (d, i) => i * 20)
+    .attr("y", (d, i) => i * 20 + 10 )
     .attr("width", 15)
     .attr("height", 15)
     .attr("fill", medal => colorScale(medal));
@@ -2869,7 +2870,7 @@ function updateGraph(selectedName) {
     .enter()
     .append("text")
     .attr("x", 20)
-    .attr("y", (d, i) => i * 20 + 12)
+    .attr("y", (d, i) => i * 20 + 10)
     .text(medal => medal);
 }
 
