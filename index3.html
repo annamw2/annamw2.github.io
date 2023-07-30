@@ -70,7 +70,7 @@
       window.location.href = url;
     }
   </script>
-<h1>Medal Count Bar Graph</h1>
+<h1>USA Medal Count Over the Years</h1>
   <div>
    <div>
     <label for="nameFilter">Filter by Sport:</label>
@@ -2835,7 +2835,7 @@ function updateGraph(selectedName) {
     .attr("stroke", medal => colorScale(medal));
 
       svg.selectAll("circle.dot")
-    .data(filteredData)
+    .data(medals)
     .enter()
     .append("circle")
     .attr("class", "dot")
