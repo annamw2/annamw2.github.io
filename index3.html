@@ -2817,7 +2817,7 @@ function updateGraph(selectedName) {
   const medals2 = [...new Set(data.map(d => d.Medal))];
   // Create a color scale for different medals
   const colorScale = d3.scaleOrdinal()
-    .domain(medals)
+    .domain(medals2)
     .range(d3.schemeCategory10);
 
   // Remove any existing lines
@@ -2855,7 +2855,7 @@ function updateGraph(selectedName) {
     .attr("transform", `translate(${width - 100}, 10)`);
 
   legend.selectAll("rect")
-    .data(medals)
+    .data(medals2)
     .enter()
     .append("rect")
     .attr("x", 0)
