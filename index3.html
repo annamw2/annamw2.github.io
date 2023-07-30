@@ -2808,17 +2808,39 @@ const lineGenerator = d3.line()
   .x(d => xScale(d.year))
   .y(d => yScale(d.n));
 
-// Function to draw the multiline graph
-function updateGraph(selectedName) {
-  const filteredData = data.filter(d => d.name === selectedName);
-
-  // Create an array of medals from the filtered data
-  const medals = [...new Set(filteredData.map(d => d.Medal))];
+            // Create an array of medals from the filtered data
+  const medals = [...new Set(data.map(d => d.Medal))];
 
   // Create a color scale for different medals
   const colorScale = d3.scaleOrdinal()
     .domain(medals)
     .range(d3.schemeCategory10);
+          
+  const legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("transform", `translate(${width - 100}, 10)`);
+
+ const medals2 = [...new Set(filteredData.map(d => d.Medal))];
+  legend.selectAll("rect")
+    .data(medals)
+    .enter()
+    .append("rect")
+    .attr("x", 0)
+    .attr("y", (d, i) => i * 20)
+    .attr("width", 15)
+    .attr("height", 15)
+    .attr("fill", medal => colorScale(medal));
+
+  legend.selectAll("text")
+    .data(medals)
+    .enter()
+    .append("text")
+    .attr("x", 20)
+    .attr("y", (d, i) => i * 20 + 12)
+    .text(medal => medal);
+// Function to draw the multiline graph
+function updateGraph(selectedName) {
+  const filteredData = data.filter(d => d.name === selectedName);
 
   // Remove any existing lines
   svg.selectAll(".line").remove();
@@ -2850,27 +2872,7 @@ function updateGraph(selectedName) {
     .call(d3.axisLeft(yScale).ticks(5));
 
   // Create a legend
-  const legend = svg.append("g")
-    .attr("class", "legend")
-    .attr("transform", `translate(${width - 100}, 10)`);
 
-  legend.selectAll("rect")
-    .data(medals)
-    .enter()
-    .append("rect")
-    .attr("x", 0)
-    .attr("y", (d, i) => i * 20)
-    .attr("width", 15)
-    .attr("height", 15)
-    .attr("fill", medal => colorScale(medal));
-
-  legend.selectAll("text")
-    .data(medals)
-    .enter()
-    .append("text")
-    .attr("x", 20)
-    .attr("y", (d, i) => i * 20 + 12)
-    .text(medal => medal);
 }
 
 // Create the drop-down filter for name
