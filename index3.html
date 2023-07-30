@@ -2860,7 +2860,7 @@ function updateGraph(selectedName) {
     .enter()
     .append("rect")
     .attr("x", 0)
-    .attr("y", (d, i) => i * 20 + 10 )
+    .attr("y", (d, i) => i * 20 + 20 )
     .attr("width", 15)
     .attr("height", 15)
     .attr("fill", medal => colorScale(medal));
@@ -2870,7 +2870,7 @@ function updateGraph(selectedName) {
     .enter()
     .append("text")
     .attr("x", 20)
-    .attr("y", (d, i) => i * 20 + 10)
+    .attr("y", (d, i) => i * 20 + 12)
     .text(medal => medal);
 }
 
