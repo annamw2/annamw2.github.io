@@ -2822,7 +2822,8 @@ function updateGraph(selectedName) {
 
   // Remove any existing lines
   svg.selectAll(".line").remove();
-
+  svg.selectAll(".dot").remove();
+    
   // Draw each line based on the medal
   const lines = svg.selectAll(".line")
     .data(medals)
@@ -2833,6 +2834,16 @@ function updateGraph(selectedName) {
     .attr("fill", "none")
     .attr("stroke", medal => colorScale(medal));
 
+      svg.selectAll("circle.dot")
+    .data(filteredData)
+    .enter()
+    .append("circle")
+    .attr("class", "dot")
+    .attr("cx", d => xScale(d.year))
+    .attr("cy", d => yScale(d.n))
+    .attr("r", 4)
+    .attr("fill", "steelblue");
+        
   // Create x-axis
  // svg.append("g")
   //  .attr("class", "x-axis")
@@ -2848,7 +2859,7 @@ function updateGraph(selectedName) {
   // Create y-axis
   svg.append("g")
     .attr("class", "y-axis")
-    .call(d3.axisLeft(yScale).ticks(5));
+    .call(d3.axisLeft(yScale).ticks(25));
 
   // Create a legend
   const legend = svg.append("g")
