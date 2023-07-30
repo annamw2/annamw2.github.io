@@ -2835,14 +2835,14 @@ function updateGraph(selectedName) {
     .attr("stroke", medal => colorScale(medal));
 
       svg.selectAll("circle.dot")
-    .data(medals)
+    .data(filteredData)
     .enter()
     .append("circle")
     .attr("class", "dot")
     .attr("cx", d => xScale(d.year))
     .attr("cy", d => yScale(d.n))
-    .attr("r", 4)
-    .attr("fill", medal => colorScale(medal));
+    .attr("r", 2)
+    .attr("fill", (d, i) => colorScale(i));
         
   // Create x-axis
  // svg.append("g")
