@@ -147,8 +147,10 @@ svg.append("circle")
 svg.append("text")
   .attr("x", annotationX + 10)
   .attr("y", annotationY - 10)
+ //.attr("text-anchor", "middle")
+  .style("font-size", "10px")
   .text("Due to Japanese-Russian War and travel difficulties, these games lacked international presence")
-  .attr("fill", "black");
+  .attr("fill", "grey");
         
 // Add x-axis
 svg.append("g")
